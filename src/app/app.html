@@ -1,0 +1,57 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="bot-avatar"></div>
+    <div class="header-info">
+      <h3>AI Assistant</h3>
+      <p>Online - Always ready to help</p>
+    </div>
+    <div class="status-indicator"></div>
+  </div>
+
+  <div class="chat-messages" #chatMessages>
+    <div class="welcome-message">
+      <p>👋 Welcome! I'm your AI assistant. How can I help you today?</p>
+      <div class="quick-actions">
+        <div class="quick-action" (click)="sendQuickMessage('Hello!')">Say Hello</div>
+        <div class="quick-action" (click)="sendQuickMessage('What can you do?')">Features</div>
+        <div class="quick-action" (click)="sendQuickMessage('Tell me a joke')">Joke</div>
+      </div>
+    </div>
+
+    <div *ngFor="let message of messages" class="message" [ngClass]="message.type">
+      <div *ngIf="message.type === 'bot'" class="message-avatar">🤖</div>
+      <div class="message-content">
+        {{message.content}}
+        <span *ngIf="message.isStreaming" class="streaming-indicator">|</span>
+      </div>
+    </div>
+
+    <div *ngIf="isTyping" class="typing-indicator">
+      <div class="message-avatar">🤖</div>
+      <div class="typing-dots">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <div class="input-container">
+      <input 
+        type="text" 
+        [(ngModel)]="userMessage" 
+        placeholder="Type your message..." 
+        (keyup.enter)="sendMessage()"
+        [disabled]="isTyping"
+      >
+    </div>
+    <button 
+      class="send-button" 
+      (click)="sendMessage()"
+      [disabled]="!userMessage || isTyping"
+    >
+      ➤
+    </button>
+  </div>
+</div>
