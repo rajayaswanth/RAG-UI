@@ -122,9 +122,7 @@ export class AppComponent implements AfterViewInit {
         const chunk = decoder.decode(value, { stream: true });
 
         // Check for special messages
-        console.log('Received chunk:', chunk);
         if (chunk.includes('[DONE]')) {
-          console.log(this.isTyping);
           break;
         } else if (chunk.includes('[ERROR]')) {
           this.handleStreamingError();
@@ -144,7 +142,6 @@ export class AppComponent implements AfterViewInit {
       this.cdr.detectChanges();
       this.scrollToBottom();
     }
-    console.log(this.isTyping);
   }
 
   private appendToCurrentMessage(content: string): void {
